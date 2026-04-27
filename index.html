@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de QR — UAI Ingeniería y Ciencias</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-logo-wrap">
+        <img src="assets/logo-uai.svg" alt="UAI Ingeniería y Ciencias" class="header-logo">
+      </div>
+      <div class="header-text">
+        <h1>Generador de Códigos QR</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="controls-panel card" aria-label="Configuración del QR">
+
+      <div class="tab-bar" role="tablist" aria-label="Tipo de contenido">
+        <button
+          id="tab-url"
+          class="tab-btn active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-url">
+          Enlace / URL
+        </button>
+        <button
+          id="tab-text"
+          class="tab-btn"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-text">
+          Texto libre
+        </button>
+      </div>
+
+      <div id="panel-url" role="tabpanel" aria-labelledby="tab-url" class="input-panel">
+        <label for="input-url" class="field-label">Dirección URL</label>
+        <input
+          type="url"
+          id="input-url"
+          class="field-input"
+          placeholder="https://ingenieria.uai.cl"
+          autocomplete="url"
+          spellcheck="false">
+      </div>
+
+      <div id="panel-text" role="tabpanel" aria-labelledby="tab-text" class="input-panel" hidden>
+        <label for="input-text" class="field-label">Texto a codificar</label>
+        <textarea
+          id="input-text"
+          class="field-input field-textarea"
+          placeholder="Ingresa el texto que quieres codificar en el QR..."
+          rows="4"
+          spellcheck="false"></textarea>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">Tamaño del QR</span>
+        <div class="size-buttons" role="group" aria-label="Tamaño del código QR">
+          <button class="size-btn" data-size="200" type="button">Pequeño</button>
+          <button class="size-btn active" data-size="300" type="button">Mediano</button>
+          <button class="size-btn" data-size="400" type="button">Grande</button>
+        </div>
+      </div>
+
+      <p id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></p>
+
+      <button id="btn-generate" class="btn-primary" type="button">
+        Generar QR
+      </button>
+
+    </section>
+
+    <section class="output-panel card" aria-label="Resultado">
+
+      <div id="qr-placeholder" class="qr-placeholder" aria-hidden="true">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="5" y="5" width="3" height="3"/>
+          <rect x="16" y="5" width="3" height="3"/>
+          <rect x="5" y="16" width="3" height="3"/>
+          <path d="M14 14h3v3h-3z M17 17h3v3h-3z M14 20h3"/>
+        </svg>
+        <p>Tu código QR aparecerá aquí</p>
+      </div>
+
+      <div id="qr-container" class="qr-container" aria-label="Código QR generado"></div>
+
+      <button id="btn-download" class="btn-secondary" type="button" disabled aria-disabled="true">
+        Descargar PNG
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Facultad de Ingeniería y Ciencias &middot; Universidad Adolfo Ibáñez &middot; 2026</p>
+    <p><a href="mailto:dec@uai.cl">dec@uai.cl</a></p>
+  </footer>
+
+  <script src="assets/qrcode.min.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
