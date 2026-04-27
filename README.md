@@ -2,7 +2,7 @@
 
 Herramienta web para generar códigos QR con la identidad visual de la Facultad de Ingeniería y Ciencias de la Universidad Adolfo Ibáñez. Sin instalación, sin servidor, funciona directamente desde el navegador.
 
-**Demo en vivo:** *(agregar URL de GitHub Pages tras el deploy)*
+**Demo en vivo:** *(sebasdv.github.io/qr_generator/)*
 
 ---
 
