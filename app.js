@@ -1,10 +1,10 @@
 'use strict';
 
-const LOGO_PATH        = 'assets/logo-uai.png';
+const LOGO_PATH        = 'assets/UAI.svg';
 const LOGO_RATIO       = 0.22;
 const LOGO_PADDING     = 10;
 const LOGO_CORNER_R    = 10;
-const QR_DARK_COLOR    = '#00afd8';
+const QR_DARK_COLOR    = '#000000';
 const QR_LIGHT_COLOR   = '#FFFFFF';
 
 const state = {
@@ -159,8 +159,8 @@ async function renderQR(text, size) {
     correctLevel: QRCode.CorrectLevel.H,
   });
 
-  /* qrcodejs renders synchronously but we wait one frame to be safe */
-  await new Promise(resolve => requestAnimationFrame(resolve));
+  /* wait for qrcodejs to finish all internal async redraws */
+  await new Promise(resolve => setTimeout(resolve, 150));
 
   const canvas = qrContainer.querySelector('canvas');
   if (!canvas) throw new Error('No se generó el canvas QR.');
@@ -171,18 +171,24 @@ async function renderQR(text, size) {
 
 /* ===== LOGO OVERLAY ===== */
 function overlayLogo(canvas) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => { drawLogoOnCanvas(canvas, img); resolve(); };
-    img.onerror = () => {
-      /* fallback: try SVG version */
-      const svg = new Image();
-      svg.onload  = () => { drawLogoOnCanvas(canvas, svg); resolve(); };
-      svg.onerror = () => { drawLogoOnCanvas(canvas, null); resolve(); };
-      svg.src = 'assets/logo-uai.svg';
-    };
-    img.src = LOGO_PATH;
-  });
+  return fetch(LOGO_PATH)
+    .then(r => r.blob())
+    .then(blob => new Promise(resolve => {
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        drawLogoOnCanvas(canvas, img);
+        URL.revokeObjectURL(url);
+        resolve();
+      };
+      img.onerror = (e) => {
+        URL.revokeObjectURL(url);
+        drawLogoOnCanvas(canvas, null);
+        resolve();
+      };
+      img.src = url;
+    }))
+    .catch(() => { drawLogoOnCanvas(canvas, null); });
 }
 
 function drawLogoOnCanvas(canvas, img) {
@@ -199,7 +205,7 @@ function drawLogoOnCanvas(canvas, img) {
   ctx.shadowColor = 'rgba(0, 32, 96, 0.18)';
   ctx.shadowBlur  = 8;
 
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#000000';
   roundedRect(ctx, x, y, totalSize, totalSize, LOGO_CORNER_R);
   ctx.fill();
 
@@ -220,7 +226,7 @@ function drawLogoOnCanvas(canvas, img) {
     /* text fallback: UAI / FIC */
     const cx = x + totalSize / 2;
     const cy = y + totalSize / 2;
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#FFFFFF';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 

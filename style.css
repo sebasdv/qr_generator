@@ -339,6 +339,15 @@ body {
   max-width: 100%;
 }
 
+/* qrcodejs genera un <img> encima del canvas — ocultamos el img y forzamos canvas visible */
+.qr-container img {
+  display: none !important;
+}
+
+.qr-container canvas {
+  display: block !important;
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
   background: #000000;

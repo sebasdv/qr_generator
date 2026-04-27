@@ -9,7 +9,7 @@ Herramienta web para generar códigos QR con la identidad visual de la Facultad 
 ## Características
 
 - Genera QR para **URLs** y **texto libre**
-- **Logo institucional UAI/FIC** incrustado en el centro del código QR
+- **Identidad visual UAI/FIC** — logo institucional configurable en el centro del código QR
 - Tres tamaños: Pequeño (200 px), Mediano (300 px), Grande (400 px)
 - Descarga el QR como **PNG** con el logo incluido
 - Los códigos generados **no tienen fecha de expiración** — son permanentes mientras el enlace destino exista
